@@ -1,9 +1,13 @@
 package com.example.lab04
+import androidx.compose.material3.Button
+
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,9 +16,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ButtonDefaults
+vimport androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -28,6 +33,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,12 +78,18 @@ fun littleForm() {
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "U R in my space!",
             fontSize = 20.sp
         )
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(86.dp))
+        Image(
+            painter = painterResource(id = R.drawable.darth),
+            contentDescription = "darthVader Image",
+            modifier = Modifier.size(120.dp)
+        )
+        Spacer(modifier = Modifier.height(56.dp))
 
         TextField(
             value = "",
@@ -88,10 +101,25 @@ fun littleForm() {
             shape = RoundedCornerShape(16.dp),
         )
         Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { /* Acción */ },
+
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(2.dp, Color.Black),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xffffffEE), // Fondo
+                contentColor = Color.Black,         // Texto / ícono
+                disabledContainerColor = Color.Gray,
+                disabledContentColor = Color.DarkGray,
+            )
+        )
+        {
+            Text("Lift Off!") // 👈 contenido del botón
+        }
     }
 }
 
-    @Preview(showBackground = true, showSystemUi = true)
+
+@Preview(showBackground = true, showSystemUi = true)
     @Composable
     fun PreviewLittleForm() {
         littleForm()
