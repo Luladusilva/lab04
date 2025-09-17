@@ -1,6 +1,4 @@
 package com.example.lab04
-import androidx.compose.material3.Button
-
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,29 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-vimport androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,77 +29,105 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                )
-                {
-                    littleForm()
+                ) {
+                    LittleFormWithFooter()
                 }
-
             }
         }
     }
 }
 
 @Composable
-fun littleForm() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    )
+fun LittleFormWithFooter() {
+    // Estado para guardar el nombre y el saludo
+    var name by remember { mutableStateOf("") }
+    var greeting by remember { mutableStateOf("") }
 
-    {
-    Spacer(modifier = Modifier.height(56.dp))
-
-    Text(
-            text = "Welcome spacetraveler!",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(56.dp))
-        Text(
-            text = "U R in my space!",
-            fontSize = 20.sp
-        )
-        Spacer(modifier = Modifier.height(86.dp))
-        Image(
-            painter = painterResource(id = R.drawable.darth),
-            contentDescription = "darthVader Image",
-            modifier = Modifier.size(120.dp)
-        )
-        Spacer(modifier = Modifier.height(56.dp))
-
-        TextField(
-            value = "",
-            onValueChange = {},
-            label = { Text("Enter your spacialname") },
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            if (greeting.isNotEmpty()) {
+                Surface(
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = greeting,
+                        modifier = Modifier.padding(16.dp),
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
+            }
+        }
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(16.dp),
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /* Acción */ },
+                .padding(innerPadding)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(modifier = Modifier.height(56.dp))
 
-            shape = RoundedCornerShape(16.dp),
-            border = BorderStroke(2.dp, Color.Black),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xffffffEE), // Fondo
-                contentColor = Color.Black,         // Texto / ícono
-                disabledContainerColor = Color.Gray,
-                disabledContentColor = Color.DarkGray,
+            Text(
+                text = "Welcome space-traveler!",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
             )
-        )
-        {
-            Text("Lift Off!") // 👈 contenido del botón
+            Spacer(modifier = Modifier.height(56.dp))
+            Text(
+                text = "U-R in my space!",
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(86.dp))
+            Image(
+                painter = painterResource(id = R.drawable.darth),
+                contentDescription = "darthVader Image",
+                modifier = Modifier.size(120.dp)
+            )
+            Spacer(modifier = Modifier.height(56.dp))
+
+            TextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Enter your spacial-name") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                shape = RoundedCornerShape(16.dp),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { greeting = "Welcome aboard, $name! 🚀" },
+                shape = RoundedCornerShape(16.dp),
+                border = BorderStroke(2.dp, Color.Black),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFEEEEEE),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = Color.DarkGray,
+                )
+            ) {
+                Text("Lift Off!")
+            }
+            Spacer(modifier = Modifier.height(180.dp))
+
+            Text(
+                text = "Powered by BlackDragon",
+                fontSize = 15.sp,
+                style = MaterialTheme.typography.titleLarge, // 👈 estilo predefinido del tema
+                color = Color.Gray,           // color personalizado
+                fontWeight = FontWeight.Bold,
+            )
         }
     }
 }
 
-
 @Preview(showBackground = true, showSystemUi = true)
-    @Composable
-    fun PreviewLittleForm() {
-        littleForm()
-    }
+@Composable
+fun PreviewLittleFormWithFooter() {
+    LittleFormWithFooter()
+}
